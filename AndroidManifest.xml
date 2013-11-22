@@ -8,6 +8,7 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:name=".MrNiceApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -24,20 +25,28 @@
         <service
             android:name=".SpecialDaySetService"
             android:process=":mrnice_background" />
-        <service
-            android:name=".SpecialDayAlarmMangerSerice"
-            android:process=":mrnice_background" />
 
-        <receiver android:name=".SpecialDayAlarmReciever" />
+        <receiver android:name=".WhoCalledStartUpReceiver" />
 
         <activity
-            android:name=".SpecialDayNotificationGuidActivity"
+            android:name="com.xgnetwork.mrnice.SpecialDayNotificationGuidActivity"
             android:label="@string/title_activity_special_day_notification_guid" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PeopleSettingActivity"
+            android:label="@string/title_activity_people_setting" >
+        </activity>
+        <activity
+            android:name=".SpecialDaySetting"
+            android:label="@string/title_activity_special_day_setting" >
+        </activity>
+        <activity
+            android:name=".PeopleList"
+            android:label="@string/title_activity_people_list" >
+        </activity>
+        <activity
+            android:name=".SpecialDayList"
+            android:label="@string/title_activity_special_day_list" >
         </activity>
     </application>
 

@@ -8,36 +8,94 @@
 package com.example.mrnice;
 
 public final class R {
+    public static final class array {
+        public static final int planets_array=0x7f050000;
+    }
     public static final class attr {
     }
     public static final class drawable {
         public static final int fligh_icon=0x7f020000;
         public static final int ic_action_search=0x7f020001;
         public static final int ic_launcher=0x7f020002;
+        public static final int pic1=0x7f020003;
+        public static final int pic2=0x7f020004;
+        public static final int pic3=0x7f020005;
+        public static final int pic4=0x7f020006;
+        public static final int pic5=0x7f020007;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f070000;
-        public static final int addday=0x7f070001;
-        public static final int menu_settings=0x7f070004;
-        public static final int notificationdetails=0x7f070003;
-        public static final int textView1=0x7f070002;
+        public static final int LinearLayout1=0x7f080000;
+        public static final int LinearLayout2=0x7f080017;
+        public static final int RelativeLayout1=0x7f080005;
+        public static final int TextView01=0x7f08000b;
+        public static final int addday=0x7f080001;
+        public static final int age=0x7f08000e;
+        public static final int another=0x7f080013;
+        public static final int date=0x7f08001a;
+        public static final int datesettingbutton=0x7f080014;
+        public static final int daylistview=0x7f080015;
+        public static final int done=0x7f080012;
+        public static final int femalecheck=0x7f08000d;
+        public static final int firstname=0x7f080008;
+        public static final int firstnametext=0x7f080007;
+        public static final int gridView1=0x7f080003;
+        public static final int howmuchtime=0x7f08001b;
+        public static final int lastname=0x7f08000a;
+        public static final int lastnametext=0x7f080009;
+        public static final int listView1=0x7f080004;
+        public static final int malecheck=0x7f08000c;
+        public static final int menu_settings=0x7f08001c;
+        public static final int name=0x7f080018;
+        public static final int next=0x7f080006;
+        public static final int notificationdetails=0x7f080016;
+        public static final int oncecheckbox=0x7f080011;
+        public static final int peryearcheckbox=0x7f080010;
+        public static final int textView1=0x7f080002;
+        public static final int type=0x7f080019;
+        public static final int typespinner=0x7f08000f;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int activity_special_day_notification_guid=0x7f030001;
+        public static final int activity_people_list=0x7f030001;
+        public static final int activity_setting=0x7f030002;
+        public static final int activity_setting_day=0x7f030003;
+        public static final int activity_special_day_list=0x7f030004;
+        public static final int activity_special_day_notification_guid=0x7f030005;
+        public static final int day_list_item=0x7f030006;
     }
     public static final class menu {
-        public static final int activity_main=0x7f060000;
-        public static final int activity_special_day_notification_guid=0x7f060001;
+        public static final int activity_abc=0x7f070000;
+        public static final int activity_dffd=0x7f070001;
+        public static final int activity_main=0x7f070002;
+        public static final int activity_main1=0x7f070003;
+        public static final int activity_people_list=0x7f070004;
+        public static final int activity_ps=0x7f070005;
+        public static final int activity_special_day_list=0x7f070006;
+        public static final int activity_special_day_notification_guid=0x7f070007;
+        public static final int activity_special_day_setting=0x7f070008;
     }
     public static final class string {
+        public static final int another=0x7f04000c;
         public static final int app_name=0x7f040000;
+        public static final int done=0x7f04000d;
+        public static final int female=0x7f040009;
         public static final int hello_world=0x7f040001;
+        public static final int howoldhe=0x7f040005;
+        public static final int howoldshe=0x7f040006;
+        public static final int male=0x7f040008;
         public static final int menu_settings=0x7f040002;
+        public static final int next=0x7f04000a;
         public static final int title_activity_main=0x7f040003;
+        public static final int title_activity_people_list=0x7f040011;
+        public static final int title_activity_people_setting=0x7f04000e;
+        public static final int title_activity_ps=0x7f04000f;
+        public static final int title_activity_special_day_list=0x7f040012;
         public static final int title_activity_special_day_notification_guid=0x7f040004;
+        public static final int title_activity_special_day_setting=0x7f040010;
+        public static final int type=0x7f04000b;
+        public static final int whose=0x7f040007;
     }
     public static final class style {
-        public static final int AppTheme=0x7f050000;
+        public static final int AppTheme=0x7f060000;
     }
 }
