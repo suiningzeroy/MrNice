@@ -5,23 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/addday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD DAY" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/maintitle"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <GridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="3" >
+        android:layout_height="0dp"
+        android:layout_weight="1">
     </GridView>
 
 </LinearLayout>

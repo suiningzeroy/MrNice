@@ -11,7 +11,7 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="next">Next</string>
-    <string name="type">Type</string>
+    <string name="type">Select Type</string>
     <string name="another">Add another day</string>
     <string name="done">Done</string>
     <string name="title_activity_people_setting">PeopleSettingActivity</string>
@@ -26,5 +26,8 @@
 
     <string name="title_activity_people_list">PeopleList</string>
     <string name="title_activity_special_day_list">SpecialDayList</string>
+    <string name="addpeople">Add New One</string>
+    <string name="peopletitle">Please select one man to add day !</string>
+    <string name="maintitle">select one item for start!</string>
 
 </resources>

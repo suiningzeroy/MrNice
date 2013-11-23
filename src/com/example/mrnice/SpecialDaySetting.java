@@ -3,8 +3,6 @@ package com.example.mrnice;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import com.example.mrnice.MainActivity.DatePickerFragment;
 import com.example.mrnice.model.SpecialDay;
 import com.example.mrnice.model.TypeOfDay;
 import com.j256.ormlite.field.DatabaseField;
@@ -18,10 +16,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -44,21 +39,18 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 	private CheckBox annually;
 	private Button selectDate;
 	private Context mContext;
+	private Spinner typeSpinner;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_day);
-		final Spinner typeSpinner = (Spinner) findViewById(R.id.typespinner);
+		typeSpinner = (Spinner) findViewById(R.id.typespinner);
+		//typeSpinner.setVisibility(View);
 		once = (CheckBox) findViewById(R.id.oncecheckbox);
 		annually = (CheckBox) findViewById(R.id.peryearcheckbox);
 		selectDate = (Button) findViewById(R.id.datesettingbutton);
 		mContext = this;
-		
-		handler = new Handler(this);
-		initialUI();
-		
-		;
 		typeList = new ArrayList<TypeOfDay>();
 		typeList = DBUtil.getAllTypeOfDays(this);
 
@@ -78,6 +70,9 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			public void onNothingSelected(AdapterView<?> arg0) {}
 			
 		});
+		handler = new Handler(this);
+		
+		initialUI();
 		
 		once.setOnClickListener(new OnClickListener(){
 
@@ -138,6 +133,15 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			
 		});
 		
+		findViewById(R.id.selecttype).setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				typeSpinner.setVisibility(View.VISIBLE);
+				spd.setTypeId(typeList.get(0).get_id());
+			}
+			
+		});
+		
 	}
 	
 	public void showDatePickerDialog(View v) {
@@ -148,6 +152,11 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 	private boolean isDataPrepare(SpecialDay spd ){
 		if(spd.getCycle() == 0 ){
 			DBUtil.toastShow(this,"please select cycle!");
+			return false;
+		}
+		
+		if(spd.getTypeId()== 0){
+			DBUtil.toastShow(this,"please select day type first!");
 			return false;
 		}
 		if(spd.getMonth() == null && spd.getDay() == null){
@@ -189,15 +198,22 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		 
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
-			if(Integer.toString(dayOfMonth).length() == 1){
-				spd.setMonth("0"+Integer.toString(dayOfMonth));
-			}
-			spd.setDay(Integer.toString(dayOfMonth));
+			
 			spd.setYear(Integer.toString(year));
 			if (Integer.toString(monthOfYear + 1).length() == 1){
-				spd.setMonth("0"+Integer.toString(monthOfYear+1));
+				String month = "0" + Integer.toString(monthOfYear+1);
+				DBUtil.toastShow(mContext,"fix month = " + month);
+				spd.setMonth(month);
+			}else{
+				spd.setMonth(Integer.toString(monthOfYear+1));
 			}
-			spd.setMonth(Integer.toString(monthOfYear+1));
+			
+			if(Integer.toString(dayOfMonth).length() == 1){
+				String day = "0"+Integer.toString(dayOfMonth);
+				spd.setDay(day);
+			}else{
+				spd.setDay(Integer.toString(dayOfMonth));
+			}
 			sendMessage(SET);
 					
 		}

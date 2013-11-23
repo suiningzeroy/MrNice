@@ -142,6 +142,16 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 		return result;
 	}
 	
+	public static List<People> getAllPeople(Context context){
+		List<People> result = new ArrayList<People>();
+		try {
+			result = getOrmLiteHelper(context).getPeopleDao().queryForAll();
+		}catch(java.sql.SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static List<TypeOfDay> getAllTypeOfDays(Context context){
 		List<TypeOfDay> result = new ArrayList<TypeOfDay>();
 		try {
@@ -169,7 +179,11 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 		}catch(java.sql.SQLException e) {
 			e.printStackTrace();
 		}
-		return type.getName();
+		if(type == null){
+			return "no name found";
+		}else{
+			return type.getName();
+		}
 	}
 
 	public static String getPeopleNameById(Context context,int _id){

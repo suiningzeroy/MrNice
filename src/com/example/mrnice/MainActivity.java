@@ -1,43 +1,25 @@
 package com.example.mrnice;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import com.example.mrnice.model.TypeOfDay;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements Handler.Callback {
-	
-	private final static int REFRESH = 1;
-	private final static String STATE = "state";
-	private String selectedDate;
-	private TextView Info;
-	
-	private AlarmManager alarms;
-	private Handler handler;
+public class MainActivity extends Activity {
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,102 +33,15 @@ public class MainActivity extends Activity implements Handler.Callback {
 		}
 		GridView gridview = (GridView) findViewById(R.id.gridView1);
 		gridview.setAdapter(new ImageAdapter(this));
-		
-		handler = new Handler(this);
-		alarms = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-		
-		Info = (TextView) findViewById(R.id.textView1);
-		Info.setText("i am info. waiting for date setting!");
-		
-		findViewById(R.id.addday).setOnClickListener(new OnClickListener(){
 
-			public void onClick(View v) {
-				showDatePickerDialog(v);
-			}
-			
-		});
-		
 		
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id){
 				Toast.makeText(MainActivity.this, "grid " + (position + 1) + " was clicked! ", Toast.LENGTH_SHORT).show();
-				Intent setting = new Intent(MainActivity.this, PeopleSettingActivity.class);
+				Intent setting = new Intent(MainActivity.this, PeopleList.class);
 				startActivity(setting);
 			}
 		});
-	}
-	
-	public boolean handleMessage(Message msg) {
-		int state = msg.getData().getInt(STATE); 
-		switch(state){
-			case REFRESH:
-				refreshUI();
-				//setSpecialDayAlarm();
-				Toast.makeText(getApplicationContext(), 
-						"refreshUI and add days to Db", 
-						Toast.LENGTH_LONG) 
-						.show(); 
-		}
-		return false;
-	}
-	
-	private void refreshUI(){
-		if(selectedDate == null)
-			Info.setText("i am info. waiting for date setting!");
-		else
-			Info.setText("the date was set in " + selectedDate);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
-	
-	public void showDatePickerDialog(View v) {
-		DialogFragment newFragment = new DatePickerFragment();
-		newFragment.show(getFragmentManager(), "datePicker");
-	}
-	
-	public class DatePickerFragment  extends DialogFragment implements DatePickerDialog.OnDateSetListener  {
-
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-				// Use the current time as the default values for the picker
-				final Calendar c = Calendar.getInstance();
-				int year = c.get(Calendar.YEAR);
-				int month = c.get(Calendar.MONTH);
-				int day = c.get(Calendar.DAY_OF_MONTH);
-				 
-				 return new DatePickerDialog(getActivity(), this, year, month, day);
-		}
-		
-		private void sendMessage(int what) {
-			Bundle bundle = new Bundle();
-			bundle.putInt(STATE, what);
-			Message message = new Message();
-			message.setData(bundle);
-			handler.sendMessage(message);
-		}
-		 
-		public void onDateSet(DatePicker view, int year, int monthOfYear,
-			int dayOfMonth) {
-			selectedDate = getSelectedDateString(year,monthOfYear,dayOfMonth);
-			sendMessage(REFRESH);
-					
-		}
-		
-		private String getSelectedDateString(int year, int monthOfYear,
-			int dayOfMonth){
-				String dateString;
-				if (Integer.toString(monthOfYear + 1).length() == 1)
-					dateString = Integer.toString(year) + "0" +Integer.toString(monthOfYear+1) + Integer.toString(dayOfMonth);
-					else
-						dateString = Integer.toString(year) + Integer.toString(monthOfYear+1) + Integer.toString(dayOfMonth);
-					
-					return dateString; 
-		}
-
 	}
 
 	public class ImageAdapter extends BaseAdapter{

@@ -25,33 +25,37 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f080000;
-        public static final int LinearLayout2=0x7f080017;
+        public static final int LinearLayout2=0x7f080018;
         public static final int RelativeLayout1=0x7f080005;
         public static final int TextView01=0x7f08000b;
-        public static final int addday=0x7f080001;
+        public static final int addpeople=0x7f080004;
         public static final int age=0x7f08000e;
-        public static final int another=0x7f080013;
-        public static final int date=0x7f08001a;
-        public static final int datesettingbutton=0x7f080014;
-        public static final int daylistview=0x7f080015;
-        public static final int done=0x7f080012;
+        public static final int another=0x7f080014;
+        public static final int date=0x7f08001b;
+        public static final int datesettingbutton=0x7f080015;
+        public static final int daylistview=0x7f080016;
+        public static final int done=0x7f080013;
         public static final int femalecheck=0x7f08000d;
         public static final int firstname=0x7f080008;
         public static final int firstnametext=0x7f080007;
-        public static final int gridView1=0x7f080003;
-        public static final int howmuchtime=0x7f08001b;
+        public static final int gender=0x7f08001f;
+        public static final int gridView1=0x7f080002;
+        public static final int howmuchtime=0x7f08001c;
         public static final int lastname=0x7f08000a;
         public static final int lastnametext=0x7f080009;
-        public static final int listView1=0x7f080004;
         public static final int malecheck=0x7f08000c;
-        public static final int menu_settings=0x7f08001c;
-        public static final int name=0x7f080018;
+        public static final int menu_settings=0x7f080020;
+        public static final int name=0x7f080019;
         public static final int next=0x7f080006;
-        public static final int notificationdetails=0x7f080016;
-        public static final int oncecheckbox=0x7f080011;
-        public static final int peryearcheckbox=0x7f080010;
-        public static final int textView1=0x7f080002;
-        public static final int type=0x7f080019;
+        public static final int notificationdetails=0x7f080017;
+        public static final int oncecheckbox=0x7f080012;
+        public static final int peopleimage=0x7f08001d;
+        public static final int peoplelist=0x7f080003;
+        public static final int peoplename=0x7f08001e;
+        public static final int peryearcheckbox=0x7f080011;
+        public static final int selecttype=0x7f080010;
+        public static final int textView1=0x7f080001;
+        public static final int type=0x7f08001a;
         public static final int typespinner=0x7f08000f;
     }
     public static final class layout {
@@ -62,6 +66,7 @@ public final class R {
         public static final int activity_special_day_list=0x7f030004;
         public static final int activity_special_day_notification_guid=0x7f030005;
         public static final int day_list_item=0x7f030006;
+        public static final int people_list_item=0x7f030007;
     }
     public static final class menu {
         public static final int activity_abc=0x7f070000;
@@ -75,6 +80,7 @@ public final class R {
         public static final int activity_special_day_setting=0x7f070008;
     }
     public static final class string {
+        public static final int addpeople=0x7f040013;
         public static final int another=0x7f04000c;
         public static final int app_name=0x7f040000;
         public static final int done=0x7f04000d;
@@ -82,9 +88,11 @@ public final class R {
         public static final int hello_world=0x7f040001;
         public static final int howoldhe=0x7f040005;
         public static final int howoldshe=0x7f040006;
+        public static final int maintitle=0x7f040015;
         public static final int male=0x7f040008;
         public static final int menu_settings=0x7f040002;
         public static final int next=0x7f04000a;
+        public static final int peopletitle=0x7f040014;
         public static final int title_activity_main=0x7f040003;
         public static final int title_activity_people_list=0x7f040011;
         public static final int title_activity_people_setting=0x7f04000e;

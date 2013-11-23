@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 
-@DatabaseTable(tableName = "Pepole")
+@DatabaseTable(tableName = "People")
 public class People {
 	@DatabaseField(generatedId = true)
 	private int _id;
@@ -14,10 +14,10 @@ public class People {
 	private String last_name;
 	@DatabaseField(canBeNull = true)
 	private String middle_name;
-	@DatabaseField(canBeNull = true)
+	@DatabaseField(canBeNull = false)
 	private String gender;
 	
-	@DatabaseField(canBeNull = false)
+	@DatabaseField(canBeNull = true)
 	private int relation_id;
 	
 	@DatabaseField(canBeNull = true)
@@ -91,5 +91,9 @@ public class People {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	
+	public String getFullName(){
+		return this.first_name + "." + this.last_name;
 	}
 }
