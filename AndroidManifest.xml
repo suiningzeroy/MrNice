@@ -32,7 +32,8 @@
             <intent-filter>
 	        		<action android:name="android.intent.action.BOOT_COMPLETED"/>
 	        	</intent-filter>
-	        </receiver>
+	    </receiver>
+	    <receiver android:name=".MrNiceSetServiceReciever" />
 
         <activity
             android:name="com.xgnetwork.mrnice.SpecialDayNotificationGuidActivity"
