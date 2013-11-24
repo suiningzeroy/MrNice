@@ -90,7 +90,7 @@ public class SpecialDaySetService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-
+		Log.d(LOGGING_TAG, LOGGING_TAG + "onHandleIntent");  
 		checkAlarmPointsListForNotification(mContext);
 
 	}
@@ -104,12 +104,13 @@ public class SpecialDaySetService extends IntentService {
 	
 	public void checkAlarmPointsListForNotification(Context context){
 		Dao<SpecialDay, Integer> specialDayDao = null;
+		Log.d(LOGGING_TAG,  "checkAlarmPointsListForNotification");  
 		try {
 			specialDayDao = DBUtil.getOrmLiteHelper(context).getSpecialDayDao();
 		} catch (java.sql.SQLException e) {
 			e.printStackTrace();
 		}
-		
+		Log.d(LOGGING_TAG,  "start iterate specialdays");  
 		for(SpecialDay spd : specialDayDao){
 			Calendar now = 	Calendar.getInstance();
 			String today;
@@ -118,6 +119,9 @@ public class SpecialDaySetService extends IntentService {
 			}
 			today = String.valueOf(now.get(Calendar.YEAR)) + String.valueOf(now.get(Calendar.MONTH)+1) + String.valueOf(now.get(Calendar.DAY_OF_MONTH));
 			long days = DBUtil.getDaySub(today, DBUtil.getAlarmDayBaseOnSpecialDay(spd));
+			Log.d(LOGGING_TAG, "today is :" + today + "specialday is " + spd.getYear()+spd.getMonth()+spd.getDay()+
+					". alarmday is: " + DBUtil.getAlarmDayBaseOnSpecialDay(spd) + ". "
+					+ String.valueOf(days) + "days left .");  
 			if(days >= 0){
 				if(days == 0){
 					makeNotificationForSpecialDay(days,spd);
