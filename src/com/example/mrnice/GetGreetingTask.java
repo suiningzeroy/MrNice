@@ -28,7 +28,7 @@ public class GetGreetingTask extends AsyncTask<Void,  Void, List<Greeting> > {
 	protected List<Greeting> doInBackground(Void... params) {
 		try {
 			HttpGet request = new HttpGet(UPDATE_URL);
-			//request.setHeader("Accept", "text/plain");
+			request.setHeader("Accept", "text/html");
 			HttpResponse response = MainActivity.getHttpClient().execute(request);
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode != HttpStatus.SC_OK) {
@@ -50,7 +50,7 @@ public class GetGreetingTask extends AsyncTask<Void,  Void, List<Greeting> > {
 		if(greetings == null || myGreetings == null){
 			data.putString("text", "no greetings");
 		}else{
-			data.putString("text", myGreetings.get(0).getTitle());
+			data.putString("text", myGreetings.get(0).getTitle() + "." + myGreetings.get(0).getContent());
 		}
 		message.setData(data);
 		handler.sendMessage(message);
