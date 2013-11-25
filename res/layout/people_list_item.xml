@@ -3,6 +3,7 @@
     android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability = "blocksDescendants"
     android:orientation="horizontal" >
 
     <ImageView
@@ -14,12 +15,23 @@
     <TextView
         android:id="@+id/peoplename"
         android:layout_width="0dp"
-        android:layout_height="wrap_content" 
-        android:layout_weight = "1"/>
+        android:layout_height="wrap_content"
+        android:gravity="center|center" 
+        android:layout_weight="111"
+        android:text="test"/>
 
     <TextView
         android:id="@+id/gender"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="50dp"
+        android:gravity="center|center" 
+        android:layout_height="wrap_content"
+        android:text="test"/>
+    
+    <CheckBox
+        android:id="@+id/peopleselectcheck"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|center" 
+        android:checked="false"/>
 
 </LinearLayout>

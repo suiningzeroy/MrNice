@@ -185,6 +185,28 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 			return type.getName();
 		}
 	}
+	
+	public static TypeOfDay getDayTypeById(Context context,int _id){
+		TypeOfDay type = null ;	
+		try {
+			type = getOrmLiteHelper(context).getTypeOfDayDao().queryForId(_id);
+		}catch(java.sql.SQLException e) {
+			e.printStackTrace();
+		}
+		return type;
+
+	}
+	
+	
+	public static SpecialDay getSpecialDayById(Context context,int _id){
+		SpecialDay result = new SpecialDay();
+		try {
+			result = getOrmLiteHelper(context).getSpecialDayDao().queryForId(_id);
+		}catch(java.sql.SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	public static String getPeopleNameById(Context context,int _id){
 		People people = null ;	

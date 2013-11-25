@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SpecialDaySetting extends Activity implements Handler.Callback{
@@ -37,31 +38,36 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 	private List<TypeOfDay> typeList;
 	private CheckBox once;
 	private CheckBox annually;
-	private Button selectDate;
+	private Button selectDate,another,done ,selecttype;
 	private Context mContext;
 	private Spinner typeSpinner;
+	private TextView selecteddate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_day);
 		typeSpinner = (Spinner) findViewById(R.id.typespinner);
-		//typeSpinner.setVisibility(View);
 		once = (CheckBox) findViewById(R.id.oncecheckbox);
 		annually = (CheckBox) findViewById(R.id.peryearcheckbox);
 		selectDate = (Button) findViewById(R.id.datesettingbutton);
 		mContext = this;
 		typeList = new ArrayList<TypeOfDay>();
+		handler = new Handler(this);
+		selecteddate = (TextView) findViewById(R.id.selecteddate);
+		another = (Button) findViewById(R.id.another);
+		done = (Button) findViewById(R.id.done);
+		selecttype = (Button) findViewById(R.id.selecttype);
+		
+		
 		typeList = DBUtil.getAllTypeOfDays(this);
-
 		ArrayAdapter<TypeOfDay> typeAdapter = new ArrayAdapter<TypeOfDay>(this,android.R.layout.simple_spinner_item,typeList);
-//		typeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,typeList1);
-		typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		typeSpinner.setAdapter(typeAdapter);		
+		//typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		typeSpinner.setAdapter(typeAdapter);	
+		
 		typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				// TODO Auto-generated method stub
 				Toast.makeText(SpecialDaySetting.this, "ID:"+((TypeOfDay)typeSpinner.getSelectedItem()).get_id()+",position:" +arg2, Toast.LENGTH_SHORT).show();
 				int typeID = ((TypeOfDay)typeSpinner.getSelectedItem()).get_id();
 				spd.setTypeId(typeID);
@@ -70,7 +76,6 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			public void onNothingSelected(AdapterView<?> arg0) {}
 			
 		});
-		handler = new Handler(this);
 		
 		initialUI();
 		
@@ -110,7 +115,7 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			
 		});
 		
-		findViewById(R.id.another).setOnClickListener(new OnClickListener(){
+		another.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				if(isDataPrepare(spd)){
@@ -121,7 +126,7 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			
 		});
 		
-		findViewById(R.id.done).setOnClickListener(new OnClickListener(){
+		done.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				if(isDataPrepare(spd)){
@@ -133,7 +138,7 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			
 		});
 		
-		findViewById(R.id.selecttype).setOnClickListener(new OnClickListener(){
+		selecttype.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				typeSpinner.setVisibility(View.VISIBLE);
@@ -168,11 +173,32 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 	}
 	
 	private void initialUI(){
-		spd = new SpecialDay();
-		once.setChecked(false);
-		annually.setChecked(true);
-		spd.setPeople_id(getIntent().getIntExtra("PeopleID", 99999));
-		spd.setCycle(8);
+		if(getIntent().getIntExtra("PeopleID", 99999) !=  999999){
+			spd = new SpecialDay();
+			once.setChecked(false);
+			annually.setChecked(true);
+			spd.setPeople_id(getIntent().getIntExtra("PeopleID", 99999));
+			spd.setCycle(8);}
+		
+		if(getIntent().getBooleanExtra("isedit", false)){
+			spd = new SpecialDay();
+			spd = DBUtil.getSpecialDayById(mContext,getIntent().getIntExtra("editday", 99999));
+			
+			if(spd == null){
+				
+			}else{
+					once.setChecked(spd.getCycle()==1? true :false);
+					annually.setChecked(spd.getCycle()==8? true :false);
+					int po = typeList.indexOf(DBUtil.getDayTypeById(mContext,spd.getTypeId()));
+					typeSpinner.setVisibility(View.VISIBLE);
+					typeSpinner.setSelection(po,true);
+					selecttype.setEnabled(false);
+					selecteddate.setText("selected date is : "+ spd.getYear()+spd.getMonth()+spd.getDay());
+					selectDate.setText("change date");
+					another.setVisibility(View.INVISIBLE);
+			}
+		}
+
 	}
 	
 	public class DatePickerFragment  extends DialogFragment implements DatePickerDialog.OnDateSetListener  {
@@ -219,6 +245,7 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		}
 
 	}
+	
 
 	public boolean handleMessage(Message msg) {
 		int state = msg.getData().getInt(STATE); 

@@ -8,7 +8,37 @@
     <ListView
         android:id="@+id/daylistview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp" 
+        android:layout_weight="1">
     </ListView>
+
+    <Button
+        android:id="@+id/addnew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:text = "@string/another">
+    </Button>
+    <LinearLayout
+          android:id="@+id/dobutton"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal" >
+           <Button
+             android:id="@+id/editday"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" 
+             android:layout_weight="10"
+             android:enabled="false"
+             android:text = "@string/edit">
+           </Button>
+           <Button
+             android:id="@+id/deleteday"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" 
+             android:layout_weight="10"
+             android:enabled="false"
+             android:text = "@string/delete">
+           </Button>
+    </LinearLayout>
 
 </LinearLayout>

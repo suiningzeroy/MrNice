@@ -29,5 +29,7 @@
     <string name="addpeople">Add New One</string>
     <string name="peopletitle">Please select one man to add day !</string>
     <string name="maintitle">select one item for start!</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 </resources>

@@ -1,37 +1,129 @@
 package com.example.mrnice;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.example.mrnice.model.SpecialDay;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SpecialDayList extends Activity {
+public class SpecialDayList extends Activity 
+					implements Handler.Callback{
 	private Context mContext;
 	private List<SpecialDay> dayList;
+	private int selectedId;
+	private boolean isSelected ;
+	private SpecialDay selectedDay;
+	private Button addNew;
+	private Button edit;
+	private Button delete;
+	private ListView dayListView;
+	private Handler handler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_special_day_list);
+		
 		mContext = SpecialDayList.this;
-		ListView dayListView = (ListView) findViewById(R.id.daylistview);
+		isSelected = false;
+		handler = new Handler();
+		
+		dayListView = (ListView) findViewById(R.id.daylistview);
+		addNew = (Button) findViewById(R.id.addnew);
+		edit = (Button) findViewById(R.id.editday);
+		delete = (Button) findViewById(R.id.deleteday);
+		
 		dayList = getSpecialDaysForAdapter();
-		dayListView.setAdapter(new SpecialDayAdapter(dayList));
+		final SpecialDayAdapter dayAdapter = new SpecialDayAdapter(dayList);
+		dayListView.setAdapter(dayAdapter);
+		
+		dayListView.setOnItemClickListener(new OnItemClickListener(){
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				selectedId = arg2;
+				isSelected = true;
+				selectedDay = dayList.get(arg2);
+				edit.setEnabled(true);
+				delete.setEnabled(true);
+				dayAdapter.notifyDataSetChanged();
+				
+		}});
+		
+		dayListView.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				DBUtil.toastShow(mContext, "long clicked");
+				return false;
+			}
+			
+		});
+		
+		addNew.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				Intent peopleList = new Intent(mContext, PeopleList.class);
+				startActivity(peopleList);
+			}
+			
+		});
+		
+		edit.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				if(selectedDay == null){
+					DBUtil.toastShow(mContext, "no selected day for edit!");
+				}else{
+					Intent editday = new Intent(mContext, SpecialDaySetting.class);
+					editday.putExtra("editday", selectedDay.get_id());
+					editday.putExtra("isedit", true);
+					startActivity(editday);
+				}
+			}
+			
+		});
+		
+		delete.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				if(selectedDay == null){
+					DBUtil.toastShow(mContext, "no selected day for delete!");
+				}else{
+					DBUtil.DeleteSpecialDay(mContext,selectedDay);
+					if(dayList.contains(selectedDay)){
+						dayList.remove(selectedDay);
+					}else{
+						DBUtil.toastShow(mContext, "selected day error!");
+					}
+					isSelected = false;
+					selectedId = 0;
+					dayAdapter.notifyDataSetChanged();
+				}
+			}
+			
+		});
+		
 	}
 
 	private List<SpecialDay> getSpecialDaysForAdapter(){
@@ -61,6 +153,7 @@ public class SpecialDayList extends Activity {
 			TextView date = (TextView) convertView.findViewById(R.id.date);
 			TextView type = (TextView) convertView.findViewById(R.id.type);
 			TextView howmuchtime = (TextView) convertView.findViewById(R.id.howmuchtime);
+			CheckBox selectCheck = (CheckBox) convertView.findViewById(R.id.dayselectcheck);
 			SpecialDay day = getItem(position);
 	
 			if (day != null) {
@@ -69,6 +162,11 @@ public class SpecialDayList extends Activity {
 				type.setText(DBUtil.getSpecialDayType(mContext, day.getTypeId()));
 				long days = DBUtil.getDaySub(today, DBUtil.getAlarmDayBaseOnSpecialDay(day));
 				howmuchtime.setText(getHowMuchTimeMsg(days));
+				if(selectedId == position && isSelected){
+					selectCheck.setChecked(true);
+				}else{
+					selectCheck.setChecked(false);
+				}
 			}	
 			return convertView;
 		}	
@@ -83,6 +181,11 @@ public class SpecialDayList extends Activity {
 			//String msg = date.substring(0, 4)+ " - " + date.substring(4,6) + " - " + date.substring(6);
 			return date;
 		}
+	}
+
+	public boolean handleMessage(Message msg) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 
