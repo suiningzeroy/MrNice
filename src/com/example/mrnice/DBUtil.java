@@ -258,13 +258,13 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 				Calendar cal = Calendar.getInstance();
 				String alarmDayInThisYear = String.valueOf(cal.get(Calendar.YEAR)) + spd.getMonth() + spd.getDay();
 				
-			Date alarmDateInThisYear = null;
-			try {
-				alarmDateInThisYear = df.parse(alarmDayInThisYear);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				Date alarmDateInThisYear = null;
+				try {
+					alarmDateInThisYear = df.parse(alarmDayInThisYear);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				cal.setTime(alarmDateInThisYear); 
 				if(cal.after(now)){
 					alarmDay = alarmDayInThisYear;

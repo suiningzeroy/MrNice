@@ -25,17 +25,19 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f080000;
-        public static final int LinearLayout2=0x7f08001d;
+        public static final int LinearLayout2=0x7f08001f;
         public static final int RelativeLayout1=0x7f080005;
         public static final int TextView01=0x7f08000b;
         public static final int addnew=0x7f080018;
         public static final int addpeople=0x7f080004;
         public static final int age=0x7f08000e;
         public static final int another=0x7f080014;
-        public static final int date=0x7f080020;
+        public static final int date=0x7f080022;
         public static final int datesettingbutton=0x7f080015;
         public static final int daylistview=0x7f080017;
-        public static final int dayselectcheck=0x7f080022;
+        public static final int dayselectcheck=0x7f080024;
+        public static final int dealbutton=0x7f08001d;
+        public static final int delay=0x7f08001e;
         public static final int deleteday=0x7f08001b;
         public static final int dobutton=0x7f080019;
         public static final int done=0x7f080013;
@@ -43,26 +45,25 @@ public final class R {
         public static final int femalecheck=0x7f08000d;
         public static final int firstname=0x7f080008;
         public static final int firstnametext=0x7f080007;
-        public static final int gender=0x7f080025;
+        public static final int gender=0x7f080027;
         public static final int gridView1=0x7f080002;
-        public static final int howmuchtime=0x7f080021;
+        public static final int howmuchtime=0x7f080023;
         public static final int lastname=0x7f08000a;
         public static final int lastnametext=0x7f080009;
         public static final int malecheck=0x7f08000c;
-        public static final int menu_settings=0x7f080027;
-        public static final int name=0x7f08001e;
+        public static final int menu_settings=0x7f080028;
+        public static final int name=0x7f080020;
         public static final int next=0x7f080006;
         public static final int notificationdetails=0x7f08001c;
         public static final int oncecheckbox=0x7f080012;
-        public static final int peopleimage=0x7f080023;
+        public static final int peopleimage=0x7f080025;
         public static final int peoplelist=0x7f080003;
-        public static final int peoplename=0x7f080024;
-        public static final int peopleselectcheck=0x7f080026;
+        public static final int peoplename=0x7f080026;
         public static final int peryearcheckbox=0x7f080011;
         public static final int selecteddate=0x7f080016;
         public static final int selecttype=0x7f080010;
         public static final int textView1=0x7f080001;
-        public static final int type=0x7f08001f;
+        public static final int type=0x7f080021;
         public static final int typespinner=0x7f08000f;
     }
     public static final class layout {
@@ -90,6 +91,7 @@ public final class R {
         public static final int addpeople=0x7f040013;
         public static final int another=0x7f04000c;
         public static final int app_name=0x7f040000;
+        public static final int cancel=0x7f040018;
         public static final int delete=0x7f040017;
         public static final int done=0x7f04000d;
         public static final int edit=0x7f040016;

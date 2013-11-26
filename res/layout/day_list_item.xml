@@ -3,7 +3,7 @@
     android:id="@+id/LinearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability = "blocksDescendants"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal" >
 
     <TextView
@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:gravity="center|center" 
          android:layout_weight = "4"
-        android:checked="false"/>
+        android:checked="false"
+        android:clickable="false"/>
 
 </LinearLayout>

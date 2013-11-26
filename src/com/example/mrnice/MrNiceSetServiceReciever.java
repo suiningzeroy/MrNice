@@ -13,6 +13,9 @@ public class MrNiceSetServiceReciever extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		Log.d(LOGGING_TAG," MrNiceSetServiceReciever onReceive");
 		Intent service = new Intent(context, SpecialDaySetService.class);
+		if(intent.getIntExtra("remind", 99999) != 99999){
+			service.putExtra("remind", intent.getIntExtra("remind", 99999));
+		}
 		context.startService(service);
 
 	}

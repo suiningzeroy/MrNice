@@ -37,7 +37,7 @@
 	    <receiver android:name=".MrNiceSetServiceReciever" />
 
         <activity
-            android:name="com.xgnetwork.mrnice.SpecialDayNotificationGuidActivity"
+            android:name=".SpecialDayNotificationGuidActivity"
             android:label="@string/title_activity_special_day_notification_guid" >
         </activity>
         <activity

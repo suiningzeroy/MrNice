@@ -91,7 +91,13 @@ public class SpecialDaySetService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.d(LOGGING_TAG, LOGGING_TAG + "onHandleIntent");  
-		checkAlarmPointsListForNotification(mContext);
+		int spdIdInIntent = intent.getIntExtra("remind", 99999);
+		if(spdIdInIntent == 99999){
+			checkAlarmPointsListForNotification(mContext);
+		}else{
+			SpecialDay remindSpd = DBUtil.getSpecialDayById(mContext, spdIdInIntent);
+			createSpecialDayNotification(remindSpd,"happy day! remind agian!");
+		}
 
 	}
 	
@@ -159,7 +165,7 @@ public class SpecialDaySetService extends IntentService {
 				.setContentText("this is a test notification!")
 				.setAutoCancel(true);
 		Intent specialDayIntent = new Intent(mContext, SpecialDayNotificationGuidActivity.class);
-		specialDayIntent.putExtra("id",spd.get_id());
+		specialDayIntent.putExtra("dayId",spd.get_id());
 		PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, specialDayIntent , 0);
 		builder.setContentIntent(contentIntent);
 		nmgr.notify(spd.get_id(), builder.build());
@@ -169,7 +175,7 @@ public class SpecialDaySetService extends IntentService {
 	public String makeNotificationMessage(String notice , SpecialDay spd){
 		String result = "";
 		String peopleName = DBUtil.getPeopleNameById(mContext,spd.getPeople_id());
-		result = "Hi, " + peopleName + "' special day is comming, " + notice;
+		result = "Hi, " + peopleName + "," + notice;
 		
 		return result;
 	}

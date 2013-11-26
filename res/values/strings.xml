@@ -31,5 +31,6 @@
     <string name="maintitle">select one item for start!</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
