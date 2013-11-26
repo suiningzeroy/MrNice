@@ -21,7 +21,9 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HttpContext;
 
+import com.example.mrnice.model.Greeting;
 import com.example.mrnice.model.TypeOfDay;
+import com.xgnetwork.mrnice.net.GetGreetingTask;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -69,7 +71,7 @@ public class MainActivity extends Activity implements Callback {
 		schemeRegistry);
 
 		HttpParams clientParams = new BasicHttpParams();
-		HttpProtocolParams.setUserAgent(clientParams, "Greeting/1.0");
+		HttpProtocolParams.setUserAgent(clientParams, "MrNice/1.0");
 		HttpConnectionParams.setConnectionTimeout(clientParams, 15 * 1000);
 		HttpConnectionParams.setSoTimeout(clientParams, 15 * 1000);
 		httpClient = new DefaultHttpClient(cm, clientParams);

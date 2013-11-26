@@ -5,8 +5,12 @@ import java.util.List;
 import com.example.mrnice.model.People;
 
 import android.os.Bundle;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +18,20 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PeopleList extends Activity {
+public class PeopleList extends Activity implements Callback{
 	
 	private Context mContext;
 	private List<People> peopleList;
 	private ListView peopleListView ;
 	private Button add;
+	private int selectedPeopleIndex;
+	private PeopleAdapter adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,8 @@ public class PeopleList extends Activity {
 		mContext = this;
 		peopleListView = (ListView) findViewById(R.id.peoplelist);
 		peopleList = getPeopleForAdapter();
-		peopleListView.setAdapter(new PeopleAdapter(peopleList));
+		adapter = new PeopleAdapter(peopleList);
+		peopleListView.setAdapter(adapter);
 		
 		peopleListView.setOnItemClickListener(new OnItemClickListener(){
 
@@ -43,6 +51,17 @@ public class PeopleList extends Activity {
 				setting.putExtra("PeopleID", peopleList.get(arg2).getid());
 				startActivity(setting);
 				
+			}
+			
+		});
+		
+		peopleListView.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {;
+				selectedPeopleIndex = arg2;
+				showEditDialog();
+				return true;
 			}
 			
 		});
@@ -57,6 +76,40 @@ public class PeopleList extends Activity {
 			}
 			
 		});
+	}
+	
+	private void showEditDialog(){
+		
+		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+		dialog.setTitle("What to do ");
+		dialog.setPositiveButton(getString(R.string.edit),new android.content.DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Intent editpeople = new Intent(mContext, PeopleSettingActivity.class);
+				editpeople.putExtra("isEdit", true);
+				editpeople.putExtra("peopleId", peopleList.get(selectedPeopleIndex).getid());
+				startActivity(editpeople);
+			}
+		});
+		
+		dialog.setNegativeButton(getString(R.string.cancel),new android.content.DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				DBUtil.toastShow(mContext, "20130418".substring(0,4) + "|" + "20130418".substring(4,6) + 
+				"|" + "20130418".substring(6,8));
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.setNeutralButton(getString(R.string.delete),new android.content.DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				People delete = peopleList.get(selectedPeopleIndex);
+				//if(DBUtil.getAllPeople(mContext).contains(delete)){
+					DBUtil.DeletePeople(mContext, delete);					
+				//}
+				peopleList.remove(selectedPeopleIndex);
+				adapter.notifyDataSetChanged();
+			}
+		});
+		dialog.show();
 	}
 
 	private List<People> getPeopleForAdapter(){
@@ -91,4 +144,9 @@ private class PeopleAdapter extends ArrayAdapter<People> {
 		}	
 		
 	}
+
+public boolean handleMessage(Message arg0) {
+	// TODO Auto-generated method stub
+	return false;
+}
 }

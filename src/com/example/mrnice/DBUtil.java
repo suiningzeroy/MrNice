@@ -19,12 +19,13 @@ import com.example.mrnice.model.*;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.GenericRawResults;
+import com.j256.ormlite.stmt.DeleteBuilder;
 
 public class DBUtil {
 	
 public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 	
-	private static DateFormat df = new SimpleDateFormat("yyyyMMdd");
+	public static DateFormat df = new SimpleDateFormat("yyyyMMdd");
 	private static String LOGGING_TAG = "MrNiceUtil";
 	private static DBOrmLiteHelper ormLiteHelper;
 	private static GenericRawResults<String[]> contacts = null;
@@ -105,12 +106,16 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 	}
 	
 	public static void DeletePeople(Context context, People people){
-		Log.d(LOGGING_TAG, "delete a man/women");
+		Log.d(LOGGING_TAG, "delete a man/women and all his special days");
+		
 		try {
 			getOrmLiteHelper(context).getPeopleDao().delete(people);
 		}catch(java.sql.SQLException e) {
 			e.printStackTrace();
 		}
+		
+		deleteSpecialDaysByPeopleId(context,people.getid());
+		
 	}
 	
 	public static void addTypeOfDay(Context context, TypeOfDay type){
@@ -133,6 +138,7 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 	}
 	
 	public static List<SpecialDay> getAllSpecialDays(Context context){
+		Log.d(LOGGING_TAG, "getAllSpecialDays ");
 		List<SpecialDay> result = new ArrayList<SpecialDay>();
 		try {
 			result = getOrmLiteHelper(context).getSpecialDayDao().queryForAll();
@@ -142,7 +148,19 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 		return result;
 	}
 	
+	public static void deleteSpecialDaysByPeopleId(Context context, int peopleID){
+		Log.d(LOGGING_TAG, "deleteSpecialDaysByPeopleId ");
+		try {
+			DeleteBuilder<SpecialDay,Integer> delete = getOrmLiteHelper(context).getSpecialDayDao().deleteBuilder();
+			delete.where().eq("people_id", peopleID);
+			delete.delete();
+		}catch(java.sql.SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static List<People> getAllPeople(Context context){
+		Log.d(LOGGING_TAG, "getAllPeople ");
 		List<People> result = new ArrayList<People>();
 		try {
 			result = getOrmLiteHelper(context).getPeopleDao().queryForAll();
@@ -216,6 +234,16 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 			e.printStackTrace();
 		}
 		return people.getFirstName() + "." + people.getLastName();
+	}
+	
+	public static People getPeopleById(Context context,int _id){
+		People people = null ;	
+		try {
+			people = getOrmLiteHelper(context).getPeopleDao().queryForId(_id);
+		}catch(java.sql.SQLException e) {
+			e.printStackTrace();
+		}
+		return people;
 	}
 	
 	public static String getAlarmDayBaseOnSpecialDay(SpecialDay spd) {

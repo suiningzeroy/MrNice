@@ -1,11 +1,15 @@
 package com.example.mrnice.model;
 
+import java.text.ParseException;
+import java.util.Date;
+
+import com.example.mrnice.DBUtil;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 
 @DatabaseTable(tableName = "SpecialDay")
-public class SpecialDay {
+public class SpecialDay implements Comparable{
 
 	@DatabaseField(generatedId = true)
 	private int _id;
@@ -99,5 +103,23 @@ public class SpecialDay {
 	public void setDay(String day) {
 		this.day = day;
 	}
+	
+	public int compareTo(Object another) {
+		String thisday = DBUtil.getAlarmDayBaseOnSpecialDay(this);
+		String antoherday = DBUtil.getAlarmDayBaseOnSpecialDay((SpecialDay)another);
+		Date day1 = null,day2 = null;
+		try {
+			day1 = DBUtil.df.parse(thisday);
+			day2 = DBUtil.df.parse(antoherday);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		if(day1 != null && day2 != null){
+			return day1.compareTo(day2);
+		}
+		return 0;
+	}
+
 	
 }

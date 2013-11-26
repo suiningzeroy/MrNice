@@ -1,6 +1,8 @@
 package com.example.mrnice;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.example.mrnice.model.SpecialDay;
@@ -54,6 +56,7 @@ public class SpecialDayList extends Activity
 		delete = (Button) findViewById(R.id.deleteday);
 		
 		dayList = getSpecialDaysForAdapter();
+		Collections.sort(dayList);
 		final SpecialDayAdapter dayAdapter = new SpecialDayAdapter(dayList);
 		dayListView.setAdapter(dayAdapter);
 		

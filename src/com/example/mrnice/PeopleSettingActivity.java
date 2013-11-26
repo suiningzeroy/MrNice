@@ -7,10 +7,12 @@ import com.example.mrnice.model.People;
 import com.example.mrnice.model.SpecialDay;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,19 +22,25 @@ public class PeopleSettingActivity extends Activity {
 	private People people;
 	private CheckBox male;
 	private CheckBox female;
+	private Button next;
+	private EditText age,firstName,lastName;
+	private Context mContext;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		
-		final EditText age = (EditText) findViewById(R.id.age);
-		final EditText fisrName = (EditText) findViewById(R.id.firstname);
-		final EditText lastName = (EditText) findViewById(R.id.lastname);
-		people = new People();
-		people.setGender("male");
-		
+		age = (EditText) findViewById(R.id.age);
+		firstName = (EditText) findViewById(R.id.firstname);
+		lastName = (EditText) findViewById(R.id.lastname);
+		next = (Button) findViewById(R.id.next);
 		male = (CheckBox) findViewById(R.id.malecheck);
 		female = (CheckBox) findViewById(R.id.femalecheck);
+		mContext = PeopleSettingActivity.this;
+		
+		people = new People();
+		
+		initialUI();
 		
 		male.setOnClickListener(new OnClickListener(){
 
@@ -52,7 +60,7 @@ public class PeopleSettingActivity extends Activity {
 			
 		});
 		
-		findViewById(R.id.next).setOnClickListener(new OnClickListener(){
+		next.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
 				if(age.getText().toString().length() > 0){
@@ -60,8 +68,8 @@ public class PeopleSettingActivity extends Activity {
 				}
 				Date createdate = new Date();
 				people.setCreateDate(createdate.getTime());
-				if(fisrName.getText().toString().length()  > 0 && lastName.getText().toString().length() > 0){
-					people.setFirstName(fisrName.getText().toString());
+				if(firstName.getText().toString().length()  > 0 && lastName.getText().toString().length() > 0){
+					people.setFirstName(firstName.getText().toString());
 					people.setLastName(lastName.getText().toString());
 				}
 				if(isDataPrepare(people)){
@@ -78,6 +86,24 @@ public class PeopleSettingActivity extends Activity {
 			}
 			
 		});
+	}
+	
+	private void initialUI(){
+		if(getIntent().getBooleanExtra("isEdit", false)){
+			int peopleId = getIntent().getIntExtra("peopleId", 99999);
+			if(peopleId != 99999)
+			people = DBUtil.getPeopleById(mContext, peopleId);
+			male.setChecked(people.getGender().equals("male")?true:false);
+			DBUtil.toastShow(mContext,people.getGender());
+			female.setChecked(people.getGender().equals("female")?true:false);			
+			firstName.setText(people.getFirstName());
+			lastName.setText(people.getLastName());
+			age.setText(String.valueOf(people.getAge()));
+			next.setText("Add Special Day");
+		}
+		else{
+			people.setGender("male");
+		}
 	}
 	
 	private void errorDisplay(String msg){

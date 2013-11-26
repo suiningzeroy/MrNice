@@ -2,6 +2,7 @@ package com.example.mrnice;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import com.example.mrnice.model.SpecialDay;
 import com.example.mrnice.model.TypeOfDay;
@@ -172,6 +173,16 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		return true;
 	}
 	
+	private int getIndexOfType(TypeOfDay t1, List<TypeOfDay> tl1){
+		int size = tl1.size();
+		for(int i = 0; i < size; i ++){
+			if(tl1.get(i).getName() == t1.getName()){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	private void initialUI(){
 		if(getIntent().getIntExtra("PeopleID", 99999) !=  999999){
 			spd = new SpecialDay();
@@ -189,8 +200,12 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 			}else{
 					once.setChecked(spd.getCycle()==1? true :false);
 					annually.setChecked(spd.getCycle()==8? true :false);
-					int po = typeList.indexOf(DBUtil.getDayTypeById(mContext,spd.getTypeId()));
+					TypeOfDay type1 = DBUtil.getDayTypeById(mContext,spd.getTypeId());
+					int po = getIndexOfType(type1,typeList);
 					typeSpinner.setVisibility(View.VISIBLE);
+					DBUtil.toastShow(mContext, "type posion ="+ String.valueOf(po));
+//					DBUtil.toastShow(mContext, "type1 id = "+ String.valueOf(type1.get_id() + "/" + type1.getName())
+//							+  "|||| typelist 2 id ="+ String.valueOf(typeList.get(1).get_id() + typeList.get(1).getName()));
 					typeSpinner.setSelection(po,true);
 					selecttype.setEnabled(false);
 					selecteddate.setText("selected date is : "+ spd.getYear()+spd.getMonth()+spd.getDay());
