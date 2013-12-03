@@ -24,6 +24,7 @@ import org.apache.http.protocol.HttpContext;
 import com.example.mrnice.model.Greeting;
 import com.example.mrnice.model.TypeOfDay;
 import com.xgnetwork.mrnice.net.GetGreetingTask;
+import com.xgnetwork.mrnice.net.PostTask;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -109,14 +110,25 @@ public class MainActivity extends Activity implements Callback {
 		GridView gridview = (GridView) findViewById(R.id.gridView1);
 		gridview.setAdapter(new ImageAdapter(this));
 		
-		new GetGreetingTask(new Handler(this)).execute();
+		//new GetGreetingTask(new Handler(this)).execute();
 
 		
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-				Toast.makeText(MainActivity.this, "grid " + (position + 1) + " was clicked! ", Toast.LENGTH_SHORT).show();
-				Intent setting = new Intent(MainActivity.this, PeopleList.class);
-				startActivity(setting);
+				switch(position){
+					case 0:
+						Intent setting = new Intent(MainActivity.this, PeopleList.class);
+						startActivity(setting);
+						break;
+					case 1:
+						new GetGreetingTask(new Handler(MainActivity.this)).execute();
+						break;
+					case 2:
+						new PostTask(new Handler(MainActivity.this)).execute();
+						break;
+					default:
+						Toast.makeText(MainActivity.this, "grid " + (position + 1) + " was clicked! ", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
