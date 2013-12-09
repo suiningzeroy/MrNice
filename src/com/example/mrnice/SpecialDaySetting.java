@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import com.example.mrnice.model.SpecialDay;
 import com.example.mrnice.model.TypeOfDay;
-import com.j256.ormlite.field.DatabaseField;
+import com.example.mrnice.MrNiceConstant;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -83,10 +83,10 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		once.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
-				if(cycle == 1){
-					cycle = 0;
+				if(cycle == MrNiceConstant.ONCE){
+					cycle = MrNiceConstant.DEFAULT;
 				}else{
-					cycle = 1;
+					cycle = MrNiceConstant.ONCE;
 				}
 				annually.setChecked(false);
 				DBUtil.toastShow(mContext,"cycle = " + String.valueOf(cycle));
@@ -97,10 +97,10 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		annually.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
-				if(cycle == 8){
-					cycle = 0;
+				if(cycle == MrNiceConstant.ANNUALLY){
+					cycle = MrNiceConstant.DEFAULT;
 				}else{
-					cycle = 8;
+					cycle = MrNiceConstant.ANNUALLY;
 				}
 				once.setChecked(false);
 				DBUtil.toastShow(mContext,"cycle = " + String.valueOf(cycle));
@@ -184,22 +184,22 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 	}
 	
 	private void initialUI(){
-		if(getIntent().getIntExtra("PeopleID", 99999) !=  999999){
+		if(getIntent().getIntExtra(MrNiceConstant.PEOPLE_ID, MrNiceConstant.ERROR_CODE) !=  MrNiceConstant.ERROR_CODE){
 			spd = new SpecialDay();
 			once.setChecked(false);
 			annually.setChecked(true);
-			spd.setPeople_id(getIntent().getIntExtra("PeopleID", 99999));
+			spd.setPeople_id(getIntent().getIntExtra(MrNiceConstant.PEOPLE_ID, MrNiceConstant.ERROR_CODE));
 			spd.setCycle(8);}
 		
-		if(getIntent().getBooleanExtra("isedit", false)){
+		if(getIntent().getBooleanExtra(MrNiceConstant.ISEDIT, false)){
 			spd = new SpecialDay();
-			spd = DBUtil.getSpecialDayById(mContext,getIntent().getIntExtra("editday", 99999));
+			spd = DBUtil.getSpecialDayById(mContext,getIntent().getIntExtra(MrNiceConstant.PEOPLE_ID, MrNiceConstant.ERROR_CODE));
 			
 			if(spd == null){
 				
 			}else{
-					once.setChecked(spd.getCycle()==1? true :false);
-					annually.setChecked(spd.getCycle()==8? true :false);
+					once.setChecked(spd.getCycle()==MrNiceConstant.ONCE? true :false);
+					annually.setChecked(spd.getCycle()==MrNiceConstant.ANNUALLY? true :false);
 					TypeOfDay type1 = DBUtil.getDayTypeById(mContext,spd.getTypeId());
 					int po = getIndexOfType(type1,typeList);
 					typeSpinner.setVisibility(View.VISIBLE);
@@ -266,7 +266,7 @@ public class SpecialDaySetting extends Activity implements Handler.Callback{
 		int state = msg.getData().getInt(STATE); 
 		switch(state){
 			case SET:
-				
+				selecteddate.setText("You have selected " + spd.getYear()+spd.getMonth()+spd.getDay()+ ".");
 				Toast.makeText(getApplicationContext(), 
 						"date selected", 
 						Toast.LENGTH_LONG) 

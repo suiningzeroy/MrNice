@@ -48,7 +48,7 @@ public class PeopleList extends Activity implements Callback{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent setting = new Intent(mContext, SpecialDaySetting.class);
-				setting.putExtra("PeopleID", peopleList.get(arg2).getid());
+				setting.putExtra(MrNiceConstant.PEOPLE_ID, peopleList.get(arg2).getid());
 				startActivity(setting);
 				
 			}
@@ -85,16 +85,14 @@ public class PeopleList extends Activity implements Callback{
 		dialog.setPositiveButton(getString(R.string.edit),new android.content.DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Intent editpeople = new Intent(mContext, PeopleSettingActivity.class);
-				editpeople.putExtra("isEdit", true);
-				editpeople.putExtra("peopleId", peopleList.get(selectedPeopleIndex).getid());
+				editpeople.putExtra(MrNiceConstant.ISEDIT, true);
+				editpeople.putExtra(MrNiceConstant.PEOPLE_ID, peopleList.get(selectedPeopleIndex).getid());
 				startActivity(editpeople);
 			}
 		});
 		
 		dialog.setNegativeButton(getString(R.string.cancel),new android.content.DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				DBUtil.toastShow(mContext, "20130418".substring(0,4) + "|" + "20130418".substring(4,6) + 
-				"|" + "20130418".substring(6,8));
 				dialog.dismiss();
 			}
 		});

@@ -105,8 +105,8 @@ public class SpecialDay implements Comparable{
 	}
 	
 	public int compareTo(Object another) {
-		String thisday = DBUtil.getAlarmDayBaseOnSpecialDay(this);
-		String antoherday = DBUtil.getAlarmDayBaseOnSpecialDay((SpecialDay)another);
+		String thisday = DBUtil.getAlarmDateBaseOnSpecialDay(this);
+		String antoherday = DBUtil.getAlarmDateBaseOnSpecialDay((SpecialDay)another);
 		Date day1 = null,day2 = null;
 		try {
 			day1 = DBUtil.df.parse(thisday);

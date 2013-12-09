@@ -75,12 +75,12 @@ public class PeopleSettingActivity extends Activity {
 				if(isDataPrepare(people)){
 					DBUtil.addPeople(PeopleSettingActivity.this, people);
 					int peopleID = DBUtil.findPeopleID(PeopleSettingActivity.this, people);
-					if(peopleID == 99999){
+					if(peopleID == MrNiceConstant.ERROR_CODE){
 						errorDisplay("people ID not found!");
 					}
 					
 					Intent setting = new Intent(PeopleSettingActivity.this, SpecialDaySetting.class);
-					setting.putExtra("PeopleID", peopleID);
+					setting.putExtra(MrNiceConstant.PEOPLE_ID, peopleID);
 					startActivity(setting);
 				}
 			}
@@ -89,9 +89,9 @@ public class PeopleSettingActivity extends Activity {
 	}
 	
 	private void initialUI(){
-		if(getIntent().getBooleanExtra("isEdit", false)){
-			int peopleId = getIntent().getIntExtra("peopleId", 99999);
-			if(peopleId != 99999)
+		if(getIntent().getBooleanExtra(MrNiceConstant.ISEDIT, false)){
+			int peopleId = getIntent().getIntExtra(MrNiceConstant.PEOPLE_ID, MrNiceConstant.ERROR_CODE);
+			if(peopleId != MrNiceConstant.ERROR_CODE)
 			people = DBUtil.getPeopleById(mContext, peopleId);
 			male.setChecked(people.getGender().equals("male")?true:false);
 			DBUtil.toastShow(mContext,people.getGender());

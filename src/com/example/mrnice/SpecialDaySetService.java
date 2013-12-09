@@ -124,9 +124,9 @@ public class SpecialDaySetService extends IntentService {
 				today = String.valueOf(now.get(Calendar.YEAR)) + "0" + String.valueOf(now.get(Calendar.MONTH)+1) + String.valueOf(now.get(Calendar.DAY_OF_MONTH));
 			}
 			today = String.valueOf(now.get(Calendar.YEAR)) + String.valueOf(now.get(Calendar.MONTH)+1) + String.valueOf(now.get(Calendar.DAY_OF_MONTH));
-			long days = DBUtil.getDaySub(today, DBUtil.getAlarmDayBaseOnSpecialDay(spd));
+			long days = DBUtil.GetNumberOfDaysBetweenToDateStrings(today, DBUtil.getAlarmDateBaseOnSpecialDay(spd));
 			Log.d(LOGGING_TAG, "today is :" + today + "specialday is " + spd.getYear()+spd.getMonth()+spd.getDay()+
-					". alarmday is: " + DBUtil.getAlarmDayBaseOnSpecialDay(spd) + ". "
+					". alarmday is: " + DBUtil.getAlarmDateBaseOnSpecialDay(spd) + ". "
 					+ String.valueOf(days) + "days left .");  
 			if(days >= 0){
 				if(days == 0){
@@ -164,8 +164,8 @@ public class SpecialDaySetService extends IntentService {
 				.setContentTitle(shortMsg)
 				.setContentText("this is a test notification!")
 				.setAutoCancel(true);
-		Intent specialDayIntent = new Intent(mContext, SpecialDayNotificationGuidActivity.class);
-		specialDayIntent.putExtra("dayId",spd.get_id());
+		Intent specialDayIntent = new Intent(mContext, SpecialDayNotificationGuideActivity.class);
+		specialDayIntent.putExtra(MrNiceConstant.PEOPLE_ID,spd.get_id());
 		PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, specialDayIntent , 0);
 		builder.setContentIntent(contentIntent);
 		nmgr.notify(spd.get_id(), builder.build());

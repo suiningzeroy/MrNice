@@ -16,35 +16,6 @@
         android:visibility="invisible" />
 
     <Button
-        android:id="@+id/selecttype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/typespinner"
-        android:layout_alignBottom="@+id/typespinner"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="44dp"
-        android:text="@string/type" />
-
-    <CheckBox
-        android:id="@+id/peryearcheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/selecttype"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="18dp"
-        android:checked="true"
-        android:text="Annually" />
-
-    <CheckBox
-        android:id="@+id/oncecheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/typespinner"
-        android:layout_alignTop="@+id/peryearcheckbox"
-        android:text="Only Once" />
-
-    <Button
         android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,21 +31,50 @@
         android:layout_alignParentLeft="true"
         android:text="@string/another" />
 
-    <Button
-        android:id="@+id/datesettingbutton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/peryearcheckbox"
-        android:layout_below="@+id/peryearcheckbox"
-        android:layout_marginTop="26dp"
-        android:text="Date setting" />
-
     <TextView
         android:id="@+id/selecteddate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/datesettingbutton"
-        android:layout_centerVertical="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/typespinner" 
+        android:text="You Have Not Selected Date !"/>
+
+    <Button
+        android:id="@+id/datesettingbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/selecteddate"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/oncecheckbox"
+        android:text="Date setting" />
+
+    <CheckBox
+        android:id="@+id/peryearcheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/datesettingbutton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="38dp"
+        android:checked="true"
+        android:text="Annually" />
+
+    <CheckBox
+        android:id="@+id/oncecheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/peryearcheckbox"
+        android:layout_alignBottom="@+id/peryearcheckbox"
+        android:layout_alignRight="@+id/typespinner"
+        android:text="Only Once" />
+
+    <Button
+        android:id="@+id/selecttype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/typespinner"
+        android:layout_alignBottom="@+id/typespinner"
+        android:layout_alignParentLeft="true"
+        android:text="@string/type" />
 
 </RelativeLayout>

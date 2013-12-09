@@ -31,4 +31,12 @@
         android:layout_marginTop="47dp"
         android:text="Remind me later" />
 
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dealbutton"
+        android:layout_alignParentLeft="true"
+        android:text="Skip it" />
+
 </RelativeLayout>

@@ -99,7 +99,7 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 		}
 		
 		if(result == null){
-			return 99999;
+			return MrNiceConstant.ERROR_CODE;
 		}else{
 			return result.get(0).getid();
 		}
@@ -246,14 +246,14 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 		return people;
 	}
 	
-	public static String getAlarmDayBaseOnSpecialDay(SpecialDay spd) {
-		String alarmDay = "";
+	public static String getAlarmDateBaseOnSpecialDay(SpecialDay spd) {
+		String alarmDate = "";
 		String orignDate = spd.getYear() + spd.getMonth() + spd.getDay();
 		switch (spd.getCycle()){
-			case 1:
-				alarmDay = orignDate;
+			case MrNiceConstant.ONCE :
+				alarmDate = orignDate;
 				break;
-			case 8:
+			case MrNiceConstant.ANNUALLY:
 				Calendar now = 	Calendar.getInstance();
 				Calendar cal = Calendar.getInstance();
 				String alarmDayInThisYear = String.valueOf(cal.get(Calendar.YEAR)) + spd.getMonth() + spd.getDay();
@@ -267,20 +267,18 @@ public static final long ONE_DAY = 24 * 60 * 60 * 1000;
 				}
 				cal.setTime(alarmDateInThisYear); 
 				if(cal.after(now)){
-					alarmDay = alarmDayInThisYear;
+					alarmDate = alarmDayInThisYear;
 				}else{
-					alarmDay = String.valueOf(cal.get(Calendar.YEAR) + 1) + spd.getMonth() + spd.getDay();
+					alarmDate = String.valueOf(cal.get(Calendar.YEAR) + 1) + spd.getMonth() + spd.getDay();
 				}
 				
 				break;
-			case 2:
-				break;
 		}
 		
-		return alarmDay;
+		return alarmDate;
 	}
 	
-	public static long getDaySub(String beginDateStr,String endDateStr)
+	public static long GetNumberOfDaysBetweenToDateStrings(String beginDateStr,String endDateStr)
 	{
 		long ONE_DAY_IN_MILL_SECOND = 24 * 60 * 60 * 1000;
 		long day=0;

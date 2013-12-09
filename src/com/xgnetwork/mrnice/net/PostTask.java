@@ -1,10 +1,8 @@
 package com.xgnetwork.mrnice.net;
 
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
@@ -13,14 +11,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.example.mrnice.MainActivity;
+import com.example.mrnice.MrNiceConstant;
 
 public class PostTask  extends AsyncTask<Void,  Void, String > {
 	private String TAG = "HTTPPOST";
-	private String UPDATE_URL =
-			"http://192.168.0.2:3000/users";
 	private String postResponse;
 	private Handler handler;
 
@@ -31,7 +27,7 @@ public class PostTask  extends AsyncTask<Void,  Void, String > {
 	@Override
 	protected String doInBackground(Void... params) {
 		try {
-			HttpPost httppost = new HttpPost(UPDATE_URL);
+			HttpPost httppost = new HttpPost(MrNiceConstant.POST_URL);
 			//httppost.addHeader("Authorization", "your token"); //认证token
 			httppost.addHeader("Content-Type", "application/json");
 			httppost.addHeader("User-Agent", "mrnice");

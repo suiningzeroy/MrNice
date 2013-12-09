@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -99,8 +100,8 @@ public class SpecialDayList extends Activity
 					DBUtil.toastShow(mContext, "no selected day for edit!");
 				}else{
 					Intent editday = new Intent(mContext, SpecialDaySetting.class);
-					editday.putExtra("editday", selectedDay.get_id());
-					editday.putExtra("isedit", true);
+					editday.putExtra(MrNiceConstant.PEOPLE_ID, selectedDay.get_id());
+					editday.putExtra(MrNiceConstant.ISEDIT, true);
 					startActivity(editday);
 				}
 			}
@@ -136,7 +137,7 @@ public class SpecialDayList extends Activity
 		return dayList;
 	}
 
-	private class SpecialDayAdapter extends ArrayAdapter<SpecialDay> {
+	public class SpecialDayAdapter extends ArrayAdapter<SpecialDay> {
 		
 		Calendar now = 	Calendar.getInstance();
 		String today = String.valueOf(now.get(Calendar.YEAR)) + String.valueOf(now.get(Calendar.MONTH)+1) + String.valueOf(now.get(Calendar.DAY_OF_MONTH));
@@ -161,9 +162,9 @@ public class SpecialDayList extends Activity
 	
 			if (day != null) {
 				name.setText(DBUtil.getPeopleNameById(mContext, day.getPeople_id()));
-				date.setText(getNewFormateDateString(DBUtil.getAlarmDayBaseOnSpecialDay(day)));
+				date.setText(getNewFormateDateString(DBUtil.getAlarmDateBaseOnSpecialDay(day)));
 				type.setText(DBUtil.getSpecialDayType(mContext, day.getTypeId()));
-				long days = DBUtil.getDaySub(today, DBUtil.getAlarmDayBaseOnSpecialDay(day));
+				long days = DBUtil.GetNumberOfDaysBetweenToDateStrings(today, DBUtil.getAlarmDateBaseOnSpecialDay(day));
 				howmuchtime.setText(getHowMuchTimeMsg(days));
 				if(selectedId == position && isSelected){
 					selectCheck.setChecked(true);
@@ -185,11 +186,26 @@ public class SpecialDayList extends Activity
 			return date;
 		}
 	}
+	
+	private String getHowMuchTimeMsg(long days){
+		String dayString = String.valueOf(days);
+		String msg = dayString + "days left ";
+		return msg;
+	}
 
 	public boolean handleMessage(Message msg) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			Intent main = new Intent(this, MainActivity.class);
+			main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(main);
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
 }

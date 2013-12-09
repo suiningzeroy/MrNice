@@ -34,10 +34,11 @@
 	        		<action android:name="android.intent.action.BOOT_COMPLETED"/>
 	        	</intent-filter>
 	    </receiver>
-	    <receiver android:name=".MrNiceSetServiceReciever" />
+	    <receiver android:name=".MrNiceSetServiceReciever" 
+	        android:process=":mrnice_background"/>
 
         <activity
-            android:name=".SpecialDayNotificationGuidActivity"
+            android:name=".SpecialDayNotificationGuideActivity"
             android:label="@string/title_activity_special_day_notification_guid" >
         </activity>
         <activity

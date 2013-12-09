@@ -7,16 +7,32 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/maintitle"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/clicked"
+        android:gravity="center"
+        android:text="@string/maintitle" />
+    
+     <ListView
+        android:id="@+id/littledaylistview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/clicked"/> 
     <GridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="0dp" 
+        android:layout_weight="1"
+        android:numColumns="4"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:gravity="center">
     </GridView>
 
 </LinearLayout>

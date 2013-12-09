@@ -7,6 +7,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 
 import com.example.mrnice.MainActivity;
+import com.example.mrnice.MrNiceConstant;
 import com.example.mrnice.model.Greeting;
 
 import android.app.Activity;
@@ -18,8 +19,6 @@ import android.os.Message;
 
 public class GetGreetingTask extends AsyncTask<Void,  Void, List<Greeting> > {
 
-	private String UPDATE_URL =
-			"http://192.168.0.2:3000/users.json";
 	private List<Greeting> myGreetings;
 	private Handler handler;
 
@@ -30,7 +29,7 @@ public class GetGreetingTask extends AsyncTask<Void,  Void, List<Greeting> > {
 	@Override
 	protected List<Greeting> doInBackground(Void... params) {
 		try {
-			HttpGet request = new HttpGet(UPDATE_URL);
+			HttpGet request = new HttpGet(MrNiceConstant.UPDATE_URL);
 			request.setHeader("Accept", "text/html");
 			HttpResponse response = MainActivity.getHttpClient().execute(request);
 			int statusCode = response.getStatusLine().getStatusCode();
